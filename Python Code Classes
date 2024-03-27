@@ -1,0 +1,74 @@
+BASE_PRICE = 63  # Base price for ages between 18 and 60
+VAT_RATE = 0.05  # the 5% VAT
+
+# VisitorType will apply discounts after receiving visitor information
+class VisitorType:
+    def __init__(self, visitor_type):
+        self.visitor_type = visitor_type
+
+    def discount_eligible(self):
+        return self.visitor_type in ['child', 'teacher', 'student', 'senior']
+
+    def group_discount_eligible(self, group_size):
+        return group_size >= 15
+
+# Visitor class to get their information
+class Visitor:
+    def __init__(self, name, age, id_number, visitor_type):
+        self.name = name
+        self.age = age
+        self.id_number = id_number
+        self.visitor_type = VisitorType(visitor_type)
+
+# Artwork class to add artwork to any exhibition
+class Artwork:
+    def __init__(self, title, artist, created_date, historical_significance, location):
+        self.title = title
+        self.artist = artist
+        self.created_date = created_date
+        self.historical_significance = historical_significance
+        self.location = location
+
+# Exhibition Class to identify where an artwork is
+class Exhibition:
+    def __init__(self, name, start_date, end_date, location):
+        self.name = name
+        self.start_date = start_date
+        self.end_date = end_date
+        self.location = location
+        self.artworks = []
+#Creating a method to add the artworks
+    def add_artwork(self, artwork):
+        self.artworks.append(artwork)
+
+# Event Class to show an event, the location, the starting/ending times, special events and the tickets.
+class Event:
+    def __init__(self, event_name, location, start_time, end_time, special_event=False):
+        self.event_name = event_name
+        self.location = location
+        self.start_time = start_time
+        self.end_time = end_time
+        self.special_event = special_event
+        self.tickets = []
+
+# Ticket Class to create a ticket
+class Ticket:
+    def __init__(self, visitor, event, group_size=1):
+        self.visitor = visitor
+        self.event = event
+        self.group_size = group_size
+        self.price = self.calculate_price()
+#Calculating the price if there is a discount
+    def calculate_price(self):
+        if self.visitor.visitor_type.discount_eligible(): #Discount for children or the elderly
+            base_price = 0
+        elif self.visitor.visitor_type.group_discount_eligible(self.group_size): #Group discount
+            base_price = BASE_PRICE * 0.5
+        else:
+            base_price = BASE_PRICE
+
+        if self.event.special_event:
+            base_price = 100  # price if there is a special event
+
+        final_price = base_price * (1 + VAT_RATE)
+        return final_price * self.group_size
