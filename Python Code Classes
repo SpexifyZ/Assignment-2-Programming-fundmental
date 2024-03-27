@@ -72,3 +72,9 @@ class Ticket:
 
         final_price = base_price * (1 + VAT_RATE)
         return final_price * self.group_size
+
+# print the receipt
+    def print_receipt(self):
+        print(f"Receipt for: {self.visitor.name}")
+        print(f"Event: {self.event.event_name}")
+        print(f"Total Price (VAT included): AED {self.price:.2f}")
