@@ -1,9 +1,3 @@
-# print the receipt
-    def print_receipt(self):
-        print(f"Receipt for: {self.visitor.name}")
-        print(f"Event: {self.event.event_name}")
-        print(f"Total Price (VAT included): AED {self.price:.2f}")
-
 from datetime import datetime #importing datetime
 # Test case method to add artworks
 def test_add_artwork():
