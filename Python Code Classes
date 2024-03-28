@@ -12,6 +12,7 @@ class VisitorType:
     def group_discount_eligible(self, group_size):
         return group_size >= 15
 
+# Visitor class to get their information
 class Visitor:
     def __init__(self, name, age, nationalID, visitor_type):
         self.name = name
